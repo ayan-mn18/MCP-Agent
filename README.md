@@ -1,75 +1,220 @@
-# Express TypeScript Boilerplate
+# MCP Agent - AI-Powered MCP Agent Generator
 
-A production-ready Node.js backend boilerplate with Express.js and TypeScript, following industry best practices.
+🤖 **Automated Model Context Protocol (MCP) Agent Creation**
 
-## 🚀 Features
+Transform any documentation into intelligent MCP agents that can be used in VS Code, Claude Desktop, and other MCP-compatible applications. Simply provide a documentation URL, and MCP Agent will crawl, vectorize, and package it into a production-ready MCP server.
 
+## 🌟 What is MCP Agent?
+
+MCP Agent is an intelligent system that creates **Model Context Protocol (MCP) agents on the fly** by:
+
+1. **📖 Crawling Documentation** - Recursively crawls any documentation site
+2. **🧠 Creating Embeddings** - Converts content into searchable vector embeddings using OpenAI
+3. **🔍 Implementing RAG** - Provides intelligent Retrieval-Augmented Generation capabilities
+4. **📦 Publishing MCP Servers** - Automatically packages and publishes ready-to-use MCP agents
+
+## 🚀 Key Features
+
+### Core Engine
+- **🕷️ Intelligent Web Crawler** - Recursive documentation crawling with depth control
+- **⚡ Vector Database** - Pinecone integration for semantic search
+- **🤖 OpenAI Embeddings** - High-quality text vectorization (512-dimensional)
+- **🔎 RAG Implementation** - Context-aware retrieval for accurate responses
+
+### MCP Integration
+- **📋 Auto-Generated MCP Servers** - Creates complete MCP agents from documentation
+- **🔌 VS Code Compatible** - Direct integration with VS Code and Claude Desktop
+- **� REST API** - Programmatic access to all functionality
+- **🎯 Namespace Support** - Organize agents by project or domain
+
+### Technical Foundation
 - **TypeScript** with strict mode enabled
-- **Express.js** web framework
+- **Express.js** web framework with professional API design
 - **Environment Configuration** with validation using Joi
-- **Error Handling** with centralized error middleware
-- **Request Validation** using Joi
-- **Logging** with Morgan and custom logger
+- **Error Handling** with centralized error middleware and detailed logging
+- **Request Validation** using comprehensive Joi schemas
 - **Security** with Helmet and CORS
 - **Testing** with Jest and Supertest
 - **Code Quality** with ESLint and Prettier
-- **Hot Reload** with ts-node-dev for development
-- **Path Mapping** for clean imports
 - **Docker Support** for containerization
-- **Heroku Ready** with Procfile
+- **Production Ready** with comprehensive monitoring
 
-## 📂 Project Structure
+## 📂 Project Architecture
 
 ```
 src/
-├── app.ts                  # Express app configuration
-├── server.ts              # Server entry point
+├── app.ts                     # Express app configuration
+├── server.ts                  # Server entry point
 ├── config/
-│   └── index.ts           # Environment configuration
+│   └── index.ts              # Environment configuration & API keys
 ├── controllers/
-│   ├── UserController.ts  # User request handlers
+│   ├── UserController.ts     # User management
+│   ├── RAGController.ts      # RAG query handling
+│   ├── VectorController.ts   # Vector database operations
 │   └── validations/
-│       └── userValidation.ts  # Joi validation schemas
+│       ├── userValidation.ts     # User validation schemas
+│       ├── ragValidation.ts      # RAG query validation
+│       └── vectorValidation.ts   # Vector operation validation
 ├── middlewares/
-│   ├── errorHandler.ts    # Global error handling
-│   └── validation.ts      # Validation middleware
+│   ├── errorHandler.ts       # Global error handling
+│   └── validation.ts         # Request validation middleware
 ├── models/
-│   └── User.ts            # User data model (mock)
+│   └── User.ts               # User data model
 ├── routes/
-│   ├── index.ts           # Health and info routes
-│   └── userRoutes.ts      # User-related routes
+│   ├── index.ts              # Health and info routes
+│   ├── userRoutes.ts         # User-related routes
+│   └── vectorRoutes.ts       # Vector database routes
 ├── services/
-│   └── UserService.ts     # Business logic
+│   ├── UserService.ts        # User business logic
+│   ├── RAGService.ts         # RAG implementation
+│   ├── VectorService.ts      # Vector database operations
+│   └── WebCrawlerService.ts  # Documentation crawling
 ├── types/
-│   └── index.ts           # TypeScript type definitions
+│   └── index.ts              # TypeScript definitions
 ├── utils/
-│   ├── helpers.ts         # Utility functions
-│   └── logger.ts          # Custom logger
+│   ├── helpers.ts            # Utility functions
+│   └── logger.ts             # Custom logger
 └── tests/
-    ├── setup.ts           # Test configuration
-    ├── health.test.ts     # Health endpoint tests
-    └── user.test.ts       # User CRUD tests
+    ├── setup.ts              # Test configuration
+    ├── health.test.ts        # Health endpoint tests
+    └── user.test.ts          # User endpoint tests
 ```
 
-## 🛠️ Getting Started
+## 🚀 Quick Start
+
+### 1. Create Your First MCP Agent
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd mcp-agent
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+# Add your OpenAI API key and Pinecone credentials
+
+# Start the server
+npm run dev
+```
+
+### 2. Generate an MCP Agent from Documentation
+
+```bash
+# Crawl documentation and create vector embeddings
+curl -X POST http://localhost:3000/api/vector/crawl-and-store \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://docs.your-favorite-tool.com",
+    "maxDepth": 3,
+    "maxPages": 50,
+    "namespace": "your-tool-docs"
+  }'
+```
+
+### 3. Query Your New Agent
+
+```bash
+# Ask questions about the documentation
+curl -X POST http://localhost:3000/api/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "How do I get started with this tool?",
+    "namespace": "your-tool-docs",
+    "topK": 5
+  }'
+```
+## 📋 API Endpoints
+
+### Vector Database Operations
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/vector/crawl-and-store` | POST | Crawl documentation and store as vectors |
+| `/api/vector/preview` | POST | Preview what will be crawled (no storage) |
+| `/api/vector/test` | POST | Test vectorization pipeline |
+| `/api/vector/stats` | GET | Get Pinecone index statistics |
+
+### RAG Query Interface
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/rag/query` | POST | Query documentation using RAG |
+| `/api/rag/search` | POST | Semantic search across vectors |
+
+### System Health
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check endpoint |
+| `/api` | GET | API information and documentation |
+
+## ⚙️ Environment Configuration
+
+Create a `.env` file with the following variables:
+
+```env
+# Server Configuration
+NODE_ENV=development
+PORT=3000
+LOG_LEVEL=info
+
+# OpenAI Configuration (Required)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Pinecone Configuration (Required)
+PINECONE_API_KEY=your_pinecone_api_key_here
+PINECONE_ENVIRONMENT=your_pinecone_environment
+PINECONE_INDEX_NAME=documentation-embeddings
+
+# Security
+CORS_ORIGIN=*
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+```
+
+## 🔧 Installation & Setup
 
 ### Prerequisites
 
 - Node.js (v18 or later)
-- npm or yarn
+- OpenAI API Key ([Get one here](https://platform.openai.com/api-keys))
+- Pinecone Account ([Sign up here](https://www.pinecone.io/))
 
-### Installation
+### Step-by-Step Setup
 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd express-typescript-boilerplate
+   cd mcp-agent
    ```
 
 2. **Install dependencies**
    ```bash
    npm install
    ```
+
+3. **Set up Pinecone Index**
+   - Create a Pinecone account and project
+   - Create an index with:
+     - **Dimensions**: 512
+     - **Metric**: cosine
+     - **Cloud & Region**: Choose your preferred option
+
+4. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys and configuration
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+The server will start at `http://localhost:3000`
 
 3. **Set up environment variables**
    ```bash
@@ -106,33 +251,96 @@ The server will start on `http://localhost:3000`
 - `GET /api` - API information
 - `GET /api/health` - Health check
 
+### Vector Database Operations
+- `POST /api/vector/crawl-and-vectorize` - Crawl URL and store embeddings
+- `POST /api/vector/preview-crawl-and-vectorize` - Preview crawl without storing
+- `POST /api/vector/test-vectorization` - Test vectorization on raw text
+- `GET /api/vector/index-stats` - Get Pinecone index statistics
+
 ### Users (Example CRUD)
 - `GET /api/users` - Get all users (with pagination)
-- `GET /api/users/:id` - Get user by ID
 - `POST /api/users` - Create new user
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
 
-### Example API Usage
+## 💡 Usage Examples
 
-**Create a user:**
+### 1. Create an MCP Agent from Documentation
+
+**Crawl and vectorize documentation:**
 ```bash
-curl -X POST http://localhost:3000/api/users \
+curl -X POST http://localhost:3000/api/vector/crawl-and-vectorize \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "john@example.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "password123"
+    "url": "https://docs.python.org/3/library/",
+    "maxPages": 50,
+    "namespace": "python-stdlib"
   }'
 ```
 
-**Get all users:**
+**Preview what will be crawled:**
 ```bash
-curl http://localhost:3000/api/users?page=1&limit=10
+curl -X POST http://localhost:3000/api/vector/preview-crawl-and-vectorize \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://fastapi.tiangolo.com/",
+    "maxPages": 20
+  }'
 ```
 
-## 🧪 Testing
+### 2. Test Vector Processing
+
+**Test embeddings on custom text:**
+```bash
+curl -X POST http://localhost:3000/api/vector/test-vectorization \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Your documentation or API reference text here",
+    "metadata": {
+      "source": "custom-docs",
+      "section": "getting-started"
+    }
+  }'
+```
+
+### 3. Monitor Index Status
+
+**Check Pinecone index statistics:**
+```bash
+curl http://localhost:3000/api/vector/index-stats
+```
+
+## � MCP Integration
+
+This system can be extended to generate Model Context Protocol (MCP) servers that provide AI assistants with domain-specific knowledge. Here's how:
+
+### 1. Crawl Documentation
+Use the vector endpoints to ingest documentation from any source and create embeddings.
+
+### 2. Implement RAG Queries
+The stored vectors enable semantic search across the crawled documentation for accurate, context-aware responses.
+
+### 3. Generate MCP Servers
+Package the knowledge and RAG capabilities into MCP-compliant servers that can be consumed by AI assistants.
+
+### Example MCP Server Structure
+```typescript
+// Future implementation for MCP server generation
+interface MCPServer {
+  name: string;
+  version: string;
+  capabilities: string[];
+  knowledge_base: {
+    namespace: string;
+    vector_count: number;
+    sources: string[];
+  };
+  endpoints: {
+    search: string;
+    answer: string;
+  };
+}
+```
+
+## �🧪 Testing
 
 Run the test suite:
 ```bash
@@ -145,22 +353,38 @@ npm run test:coverage
 ```
 
 The project includes comprehensive tests for:
+- Vector database operations
+- Web crawler functionality  
+- Error handling and validation
 - Health check endpoints
-- User CRUD operations
-- Error handling
-- Validation
 
 ## 🔧 Configuration
 
 Environment variables can be configured in `.env`:
 
 ```env
+# Server Configuration
 NODE_ENV=development
 PORT=3000
 LOG_LEVEL=info
 CORS_ORIGIN=*
+
+# Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
+
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Pinecone Configuration  
+PINECONE_API_KEY=your_pinecone_api_key_here
+PINECONE_ENVIRONMENT=your_pinecone_environment
+PINECONE_INDEX_NAME=your_pinecone_index_name
+
+# Vector Processing
+CHUNK_SIZE=1000
+CHUNK_OVERLAP=200
+MAX_CONCURRENT_REQUESTS=5
 ```
 
 ## 🐳 Docker Support
@@ -183,7 +407,11 @@ docker run -p 3000:3000 express-typescript-api
 ### Heroku
 
 1. Create a Heroku app
-2. Set environment variables
+2. Set environment variables in Heroku dashboard:
+   - `OPENAI_API_KEY`
+   - `PINECONE_API_KEY` 
+   - `PINECONE_ENVIRONMENT`
+   - `PINECONE_INDEX_NAME`
 3. Deploy:
    ```bash
    git push heroku main
@@ -192,6 +420,11 @@ docker run -p 3000:3000 express-typescript-api
 ### Other Platforms
 
 The application includes a `build.sh` script for deployment platforms that support it.
+
+**Environment Variables Required:**
+- OpenAI API key for embeddings
+- Pinecone credentials for vector storage
+- Standard Node.js/Express configuration
 
 ## 🎨 Code Style
 
@@ -394,18 +627,47 @@ The server will start on `http://localhost:3000` (or your configured PORT).
 }
 ```
 
-## 🧪 Testing
+## 🗺️ Roadmap
 
-Run the test suite:
+### Phase 1: Core Infrastructure ✅
+- [x] Web crawler for documentation sites
+- [x] Vector embedding generation with OpenAI
+- [x] Pinecone vector storage integration
+- [x] RESTful API with comprehensive validation
 
-```bash
-# Run all tests
-npm test
+### Phase 2: MCP Server Generation (Planned)
+- [ ] RAG query implementation for semantic search
+- [ ] MCP server template generation
+- [ ] Automated MCP server deployment
+- [ ] Custom knowledge base management
 
-# Run tests in watch mode
-npm run test:watch
+### Phase 3: Advanced Features (Future)
+- [ ] Multi-source documentation aggregation
+- [ ] Custom embedding model support
+- [ ] Real-time documentation updates
+- [ ] MCP server marketplace integration
 
-# Run tests with coverage
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- 📧 Report issues on [GitHub Issues](https://github.com/yourusername/mcp-agent/issues)
+- 💬 Join our community discussions
+- 📖 Check the documentation for detailed guides
+
+---
+
+**Made with ❤️ for the AI community**
 npm run test:coverage
 ```
 
