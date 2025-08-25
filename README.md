@@ -1,17 +1,32 @@
-# MCP Agent - AI-Powered MCP Agent Generator
+# MCP Agent - AI## 🚀 Key Features
 
-🤖 **Automated Model Context Protocol (MCP) Agent Creation**
+### Core RAG Engine
+- **🕷️ Intelligent Web Crawler** - Smart recursive crawling with content filtering and depth control
+- **⚡ Vector Database Integration** - Pinecone-powered semantic search with 512-dimensional embeddings
+- **🤖 OpenAI GPT-4o Integration** - Advanced language model for intelligent response generation
+- **🔎 Advanced RAG Implementation** - Context-aware retrieval with confidence scoring and source citation
+- **🎯 Multi-Namespace Support** - Organize knowledge bases by project, language, or domain
 
-Transform any documentation into intelligent MCP agents that can be used in VS Code, Claude Desktop, and other MCP-compatible applications. Simply provide a documentation URL, and MCP Agent will crawl, vectorize, and package it into a production-ready MCP server.
+### Smart Query Processing
+- **📝 Natural Language Queries** - Ask questions in plain English and get detailed, technical responses
+- **📊 Similarity Search** - Find relevant documentation sections with semantic similarity scoring
+- **🔗 Source Attribution** - Every response includes source citations with URLs and confidence scores
+- **⚙️ Configurable Results** - Control result count, metadata inclusion, and filtering options
+- **📈 Performance Metrics** - Response times, confidence scores, and processing statisticsmentation RAG System
+
+🤖 **Intelligent Documentation Processing & Retrieval-Augmented Generation**
+
+Transform any documentation into a searchable, intelligent knowledge base using advanced vector embeddings and RAG (Retrieval-Augmented Generation). Crawl documentation sites, create semantic embeddings, and query them with natural language for detailed, context-aware responses.
 
 ## 🌟 What is MCP Agent?
 
-MCP Agent is an intelligent system that creates **Model Context Protocol (MCP) agents on the fly** by:
+MCP Agent is an intelligent documentation processing system that:
 
-1. **📖 Crawling Documentation** - Recursively crawls any documentation site
-2. **🧠 Creating Embeddings** - Converts content into searchable vector embeddings using OpenAI
-3. **🔍 Implementing RAG** - Provides intelligent Retrieval-Augmented Generation capabilities
-4. **📦 Publishing MCP Servers** - Automatically packages and publishes ready-to-use MCP agents
+1. **📖 Crawls Documentation** - Recursively crawls any documentation website with configurable depth and filtering
+2. **🧠 Creates Vector Embeddings** - Converts content into searchable 512-dimensional vectors using OpenAI's latest embedding models
+3. **🔍 Implements Advanced RAG** - Provides intelligent Retrieval-Augmented Generation with context-aware responses
+4. **⚡ Semantic Search** - Fast similarity search across large documentation corpora
+5. **📦 Namespace Management** - Organize multiple knowledge bases by project, domain, or topic
 
 ## 🚀 Key Features
 
@@ -48,13 +63,15 @@ src/
 ├── config/
 │   └── index.ts              # Environment configuration & API keys
 ├── controllers/
-│   ├── UserController.ts     # User management
-│   ├── RAGController.ts      # RAG query handling
-│   ├── VectorController.ts   # Vector database operations
+│   ├── UserController.ts         # User management
+│   ├── RAGController.ts          # RAG query handling & intelligent responses
+│   ├── VectorController.ts       # Vector database operations
+│   └── WebCrawlerController.ts   # Documentation crawling
 │   └── validations/
-│       ├── userValidation.ts     # User validation schemas
-│       ├── ragValidation.ts      # RAG query validation
-│       └── vectorValidation.ts   # Vector operation validation
+│       ├── userValidation.ts         # User validation schemas
+│       ├── ragValidation.ts          # RAG query validation
+│       ├── vectorValidation.ts       # Vector operation validation
+│       └── webCrawlerValidation.ts   # Crawler validation schemas
 ├── middlewares/
 │   ├── errorHandler.ts       # Global error handling
 │   └── validation.ts         # Request validation middleware
@@ -62,13 +79,15 @@ src/
 │   └── User.ts               # User data model
 ├── routes/
 │   ├── index.ts              # Health and info routes
-│   ├── userRoutes.ts         # User-related routes
-│   └── vectorRoutes.ts       # Vector database routes
+│   ├── userRoutes.ts         # User management routes
+│   ├── ragRoutes.ts          # RAG query & search routes
+│   ├── vectorRoutes.ts       # Vector database routes
+│   └── webCrawlerRoutes.ts   # Documentation crawling routes
 ├── services/
 │   ├── UserService.ts        # User business logic
-│   ├── RAGService.ts         # RAG implementation
-│   ├── VectorService.ts      # Vector database operations
-│   └── WebCrawlerService.ts  # Documentation crawling
+│   ├── RAGService.ts         # RAG implementation & intelligent response generation
+│   ├── VectorService.ts      # Vector database operations & embeddings
+│   └── WebCrawlerService.ts  # Smart documentation crawling
 ├── types/
 │   └── index.ts              # TypeScript definitions
 ├── utils/
@@ -82,7 +101,7 @@ src/
 
 ## 🚀 Quick Start
 
-### 1. Create Your First MCP Agent
+### 1. Setup & Installation
 
 ```bash
 # Clone the repository
@@ -92,15 +111,15 @@ cd mcp-agent
 # Install dependencies
 npm install
 
-# Configure environment
+# Configure environment variables
 cp .env.example .env
-# Add your OpenAI API key and Pinecone credentials
+# Add your OpenAI API key and Pinecone credentials to .env
 
-# Start the server
+# Start the development server
 npm run dev
 ```
 
-### 2. Generate an MCP Agent from Documentation
+### 2. Create Your First Knowledge Base
 
 ```bash
 # Crawl documentation and create vector embeddings
@@ -110,14 +129,15 @@ curl -X POST http://localhost:3000/api/vector/crawl-and-store \
     "url": "https://docs.your-favorite-tool.com",
     "maxDepth": 3,
     "maxPages": 50,
-    "namespace": "your-tool-docs"
+    "namespace": "your-tool-docs",
+    "indexName": "documentation-embeddings"
   }'
 ```
 
-### 3. Query Your New Agent
+### 3. Query Your Knowledge Base with RAG
 
 ```bash
-# Ask questions about the documentation
+# Ask intelligent questions and get detailed responses
 curl -X POST http://localhost:3000/api/rag/query \
   -H "Content-Type: application/json" \
   -d '{
@@ -126,30 +146,216 @@ curl -X POST http://localhost:3000/api/rag/query \
     "topK": 5
   }'
 ```
+
+### 4. Perform Semantic Search
+
+```bash
+# Search for specific information without generating an answer
+curl -X POST http://localhost:3000/api/rag/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "installation steps",
+    "namespace": "your-tool-docs",
+    "topK": 3,
+    "includeMetadata": true
+  }'
+```
+
+### 5. Manage Your Knowledge Bases
+
+```bash
+# List all available namespaces
+curl http://localhost:3000/api/rag/namespaces
+
+# Get detailed statistics for a namespace
+curl http://localhost:3000/api/rag/namespaces/your-tool-docs/stats
+```
 ## 📋 API Endpoints
 
-### Vector Database Operations
+### Documentation Crawling & Vectorization
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/vector/crawl-and-store` | POST | Crawl documentation and store as vectors |
+| `/api/vector/crawl-and-store` | POST | Crawl documentation and store as vector embeddings |
 | `/api/vector/preview` | POST | Preview what will be crawled (no storage) |
-| `/api/vector/test` | POST | Test vectorization pipeline |
-| `/api/vector/stats` | GET | Get Pinecone index statistics |
+| `/api/vector/test` | POST | Test vectorization pipeline with sample content |
+| `/api/vector/index/:indexName/stats` | GET | Get Pinecone index statistics |
 
-### RAG Query Interface
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/rag/query` | POST | Query documentation using RAG |
-| `/api/rag/search` | POST | Semantic search across vectors |
-
-### System Health
+### RAG Query & Search Interface
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/health` | GET | Health check endpoint |
-| `/api` | GET | API information and documentation |
+| `/api/rag/query` | POST | Query documentation using RAG with intelligent, detailed responses |
+| `/api/rag/search` | POST | Semantic search across vectors without answer generation |
+| `/api/rag/namespaces` | GET | List all available namespaces with optional statistics |
+| `/api/rag/namespaces/:namespace/stats` | GET | Get detailed statistics for a specific namespace |
+| `/api/rag/health` | GET | Health check for RAG system components |
+
+### Web Crawler Operations
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/crawler/crawl` | POST | Crawl documentation websites with smart content extraction |
+| `/api/crawler/preview` | POST | Preview crawl results without actual crawling |
+| `/api/crawler/analyze` | POST | Analyze a single page for content extraction |
+
+### System Health & Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | System health check with detailed metrics |
+| `/api` | GET | API information and available endpoints |
+| `/api/users` | GET/POST | User management (example CRUD operations) |
+
+## 🔌 API Usage Examples
+
+### Documentation Crawling
+
+```bash
+# Preview documentation before crawling
+curl -X POST http://localhost:3000/api/vector/preview \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://docs.example.com",
+    "namespace": "my-docs",
+    "maxPages": 50,
+    "includeSubpages": true
+  }'
+
+# Crawl and store documentation as vectors
+curl -X POST http://localhost:3000/api/vector/crawl-and-store \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://docs.example.com",
+    "namespace": "my-docs",
+    "maxPages": 50,
+    "maxDepth": 3,
+    "includeSubpages": true,
+    "indexName": "documentation-embeddings"
+  }'
+
+# Test vectorization with sample content
+curl -X POST http://localhost:3000/api/vector/test \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "This is a test document for vectorization",
+    "namespace": "test-namespace",
+    "metadata": {
+      "title": "Test Document",
+      "source": "manual"
+    }
+  }'
+```
+
+### RAG Queries & Search
+
+```bash
+# Query documentation with intelligent AI responses
+curl -X POST http://localhost:3000/api/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "How do I implement authentication?",
+    "namespace": "my-docs",
+    "topK": 5,
+    "includeMetadata": true,
+    "includeSources": true,
+    "temperature": 0.7
+  }'
+
+# Simple semantic search without AI generation
+curl -X POST http://localhost:3000/api/rag/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "user authentication",
+    "namespace": "my-docs",
+    "topK": 10,
+    "includeMetadata": true,
+    "scoreThreshold": 0.7
+  }'
+
+# Get namespace statistics and vector counts
+curl -X GET http://localhost:3000/api/rag/namespaces/my-docs/stats
+
+# List all available namespaces
+curl -X GET http://localhost:3000/api/rag/namespaces?includeStats=true
+```
+
+### System Monitoring
+
+```bash
+# Check overall system health
+curl -X GET http://localhost:3000/api/health
+
+# Check RAG system components
+curl -X GET http://localhost:3000/api/rag/health
+
+# Get Pinecone index statistics
+curl -X GET http://localhost:3000/api/vector/index/documentation-embeddings/stats
+```
+
+### Expected Response Formats
+
+#### RAG Query Response
+```json
+{
+  "success": true,
+  "data": {
+    "answer": "To implement authentication, you need to follow these steps: 1. Set up your authentication provider... 2. Configure middleware... 3. Protect your routes...",
+    "sources": [
+      {
+        "id": "auth-guide-001", 
+        "url": "https://docs.example.com/auth",
+        "title": "Authentication Guide",
+        "score": 0.95,
+        "snippet": "Authentication implementation requires...",
+        "metadata": {
+          "section": "Getting Started",
+          "lastUpdated": "2024-01-20"
+        }
+      }
+    ],
+    "confidence": 0.92,
+    "namespace": "my-docs",
+    "queryId": "unique-query-id",
+    "processingTime": "245ms"
+  }
+}
+```
+
+#### Namespace Statistics Response
+```json
+{
+  "success": true,
+  "data": {
+    "namespace": "my-docs",
+    "vectorCount": 1250,
+    "totalSize": "15.2MB",
+    "lastUpdated": "2024-01-20T10:30:00Z",
+    "indexName": "documentation-embeddings",
+    "dimensions": 512,
+    "averageScore": 0.87,
+    "sourceUrls": [
+      "https://docs.example.com",
+      "https://api.example.com/docs"
+    ]
+  }
+}
+```
+
+#### Error Response Format
+```json
+{
+  "success": false,
+  "error": {
+    "message": "Invalid namespace specified",
+    "code": "INVALID_NAMESPACE",
+    "details": {
+      "namespace": "invalid-name",
+      "availableNamespaces": ["my-docs", "test-namespace"]
+    }
+  }
+}
+```
 
 ## ⚙️ Environment Configuration
 
@@ -169,26 +375,43 @@ PINECONE_API_KEY=your_pinecone_api_key_here
 PINECONE_ENVIRONMENT=your_pinecone_environment
 PINECONE_INDEX_NAME=documentation-embeddings
 
-# Security
+# Vector Database Settings
+EMBEDDING_MODEL=text-embedding-3-small
+EMBEDDING_DIMENSIONS=512
+VECTOR_ENCODING_FORMAT=float
+
+# RAG Configuration
+RAG_MODEL=gpt-4o-mini
+DEFAULT_TOP_K=5
+MAX_CONTEXT_LENGTH=16000
+RESPONSE_TEMPERATURE=0.7
+
+# Web Crawler Settings
+MAX_PAGES_PER_CRAWL=100
+MAX_CRAWL_DEPTH=5
+CRAWLER_DELAY_MS=1000
+
+# Security & Rate Limiting
 CORS_ORIGIN=*
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
+API_TIMEOUT_MS=30000
 ```
 
 ## 🔧 Installation & Setup
 
 ### Prerequisites
 
-- Node.js (v18 or later)
-- OpenAI API Key ([Get one here](https://platform.openai.com/api-keys))
-- Pinecone Account ([Sign up here](https://www.pinecone.io/))
+- **Node.js** (v18 or later)
+- **OpenAI API Key** ([Get one here](https://platform.openai.com/api-keys))
+- **Pinecone Account** ([Sign up here](https://www.pinecone.io/))
 
 ### Step-by-Step Setup
 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd mcp-agent
+   cd documentation-rag-system
    ```
 
 2. **Install dependencies**
@@ -196,47 +419,197 @@ RATE_LIMIT_MAX_REQUESTS=100
    npm install
    ```
 
-3. **Set up Pinecone Index**
-   - Create a Pinecone account and project
-   - Create an index with:
-     - **Dimensions**: 512
-     - **Metric**: cosine
-     - **Cloud & Region**: Choose your preferred option
-
-4. **Configure environment variables**
+3. **Create environment file**
    ```bash
    cp .env.example .env
    # Edit .env with your API keys and configuration
    ```
+
+4. **Set up Pinecone Index**
+   - Create a new index in your Pinecone dashboard
+   - Use dimensions: **512**
+   - Metric: **cosine**
+   - Name: **documentation-embeddings** (or update PINECONE_INDEX_NAME in .env)
 
 5. **Start the development server**
    ```bash
    npm run dev
    ```
 
-The server will start at `http://localhost:3000`
-
-3. **Set up environment variables**
+6. **Verify installation**
    ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
+   curl http://localhost:3000/api/health
    ```
 
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
+### Production Deployment
 
-The server will start on `http://localhost:3000`
+```bash
+# Build the application
+npm run build
+
+# Start production server
+npm start
+
+# Or use PM2 for process management
+npm install -g pm2
+pm2 start dist/app.js --name "rag-system"
+```
+
+## 🧪 Testing
+
+Run the test suite to ensure everything is working correctly:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+
+# Test specific components
+npm run test:unit
+npm run test:integration
+```
+
+## 📊 Performance & Monitoring
+
+### Health Check Endpoints
+
+- **`GET /api/health`** - Overall system health
+- **`GET /api/rag/health`** - RAG system components
+- **`GET /api/vector/index/:indexName/stats`** - Vector database metrics
+
+### Key Metrics Monitored
+
+- **Vector Database**: Connection status, index statistics, query latency
+- **OpenAI API**: Rate limits, response times, token usage
+- **Memory Usage**: Embedding cache, active connections
+- **Query Performance**: Average response time, success rates
+
+### Logging
+
+The system uses structured logging with different levels:
+
+```bash
+# View logs in development
+npm run dev
+
+# View logs in production
+pm2 logs rag-system
+
+# Log levels: error, warn, info, debug
+LOG_LEVEL=debug npm run dev
+## 🚀 Advanced Features
+
+### Intelligent Document Processing
+
+- **Smart Content Extraction**: Automatically identifies and extracts meaningful content from documentation pages
+- **Hierarchical Chunking**: Breaks down content into semantic chunks while preserving document structure
+- **Metadata Enrichment**: Automatically extracts titles, sections, and contextual information
+- **Link Analysis**: Follows internal documentation links to build comprehensive knowledge bases
+
+### Advanced RAG Capabilities
+
+- **Context-Aware Responses**: Generates responses that understand the broader context of your documentation
+- **Source Attribution**: Every answer includes detailed source citations with relevance scores
+- **Confidence Scoring**: Provides confidence metrics for generated responses
+- **Multi-Document Synthesis**: Combines information from multiple sources for comprehensive answers
+
+### Production-Ready Features
+
+- **Namespace Management**: Organize multiple documentation sets with isolated namespaces
+- **Rate Limiting**: Built-in protection against API abuse
+- **Comprehensive Logging**: Structured logging for monitoring and debugging
+- **Health Monitoring**: Real-time health checks for all system components
+- **Error Recovery**: Robust error handling with graceful degradation
+
+## 🛠️ Architecture Deep Dive
+
+### System Components
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Web Crawler   │────│  Vector Store   │────│   RAG Engine    │
+│                 │    │   (Pinecone)    │    │   (OpenAI)      │
+│ • Content       │    │ • Embeddings    │    │ • Query         │
+│   Extraction    │    │ • Metadata      │    │   Processing    │
+│ • Link Analysis │    │ • Namespaces    │    │ • Response      │
+│ • Rate Limiting │    │ • Search        │    │   Generation    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+        │                       │                       │
+        │                       │                       │
+        └───────────────────────┼───────────────────────┘
+                                │
+                    ┌─────────────────┐
+                    │   Express API   │
+                    │                 │
+                    │ • Validation    │
+                    │ • Authentication│
+                    │ • Rate Limiting │
+                    │ • Error Handling│
+                    └─────────────────┘
+```
+
+### Data Flow
+
+1. **Document Ingestion**: Web crawler extracts content and metadata from documentation
+2. **Vectorization**: Content is embedded using OpenAI's text-embedding-3-small model
+3. **Storage**: Vectors and metadata stored in Pinecone with namespace organization
+4. **Query Processing**: User queries are embedded and matched against vector database
+5. **Response Generation**: Retrieved context is processed by GPT-4o-mini for intelligent responses
 
 ## 📜 Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Build production bundle |
-| `npm start` | Start production server |
-| `npm test` | Run test suite |
+| Script | Command | Description |
+|--------|---------|-------------|
+| Development | `npm run dev` | Start development server with hot reload |
+| Production Build | `npm run build` | Build production bundle with TypeScript compilation |
+| Production Start | `npm start` | Start production server |
+| Testing | `npm test` | Run comprehensive test suite |
+| Test Watch | `npm run test:watch` | Run tests in watch mode for development |
+| Test Coverage | `npm run test:coverage` | Generate test coverage reports |
+| Linting | `npm run lint` | Run ESLint for code quality checks |
+| Type Checking | `npm run type-check` | Run TypeScript compiler for type validation |
+
+## 🐳 Docker Deployment
+
+### Build and Run with Docker
+
+```bash
+# Build the Docker image
+docker build -t documentation-rag-system .
+
+# Run the container
+docker run -p 3000:3000 --env-file .env documentation-rag-system
+
+# Or use Docker Compose
+docker-compose up -d
+```
+
+### Production Docker Setup
+
+```yaml
+# docker-compose.prod.yml
+version: '3.8'
+services:
+  rag-system:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+```
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run test:coverage` | Run tests with coverage report |
 | `npm run lint` | Run ESLint |
@@ -306,6 +679,93 @@ curl -X POST http://localhost:3000/api/vector/test-vectorization \
 **Check Pinecone index statistics:**
 ```bash
 curl http://localhost:3000/api/vector/index-stats
+```
+
+## 🤖 RAG Query Examples
+
+### 1. Query Documentation with Intelligent Responses
+
+**Ask questions and get detailed, agentic answers:**
+```bash
+curl -X POST http://localhost:3000/api/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "How do I install and configure this framework?",
+    "namespace": "fastapi-docs",
+    "topK": 5
+  }'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "Query processed successfully",
+  "data": {
+    "answer": "To install and configure FastAPI, follow these steps:\n\n## Installation\n\n1. **Install FastAPI and Uvicorn** (Source 1):\n```bash\npip install fastapi uvicorn\n```\n\n2. **Create your first application** (Source 2):\n```python\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n```\n\n3. **Run the development server** (Source 1):\n```bash\nuvicorn main:app --reload\n```\n\nThe application will be available at http://127.0.0.1:8000, with automatic API documentation at http://127.0.0.1:8000/docs.",
+    "sources": [
+      {
+        "id": "doc_1",
+        "score": 0.89,
+        "metadata": {
+          "content": "FastAPI installation guide...",
+          "title": "Getting Started",
+          "url": "https://fastapi.tiangolo.com/tutorial/",
+          "section": "Installation"
+        }
+      }
+    ],
+    "query": "How do I install and configure this framework?",
+    "namespace": "fastapi-docs",
+    "confidence": 89,
+    "processingTime": 1234
+  }
+}
+```
+
+### 2. Semantic Search Only
+
+**Search without generating answers:**
+```bash
+curl -X POST http://localhost:3000/api/rag/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "authentication middleware",
+    "namespace": "express-docs",
+    "topK": 3,
+    "includeMetadata": true
+  }'
+```
+
+### 3. Advanced Filtering
+
+**Search with metadata filters:**
+```bash
+curl -X POST http://localhost:3000/api/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "database connection",
+    "namespace": "node-docs",
+    "topK": 5,
+    "filter": {
+      "section": "configuration",
+      "difficulty": "beginner"
+    }
+  }'
+```
+
+### 4. Check Available Namespaces
+
+**List all available knowledge bases:**
+```bash
+curl http://localhost:3000/api/rag/namespaces?includeStats=true&limit=10
+```
+
+### 5. Get Namespace Statistics
+
+**Check specific namespace details:**
+```bash
+curl http://localhost:3000/api/rag/namespaces/python-docs/stats
 ```
 
 ## � MCP Integration
@@ -453,17 +913,16 @@ Security features included:
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new features
-5. Run the test suite
-6. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## � Acknowledgments
+## 🙏 Acknowledgments
 
 - Express.js team for the amazing framework
 - TypeScript team for type safety
@@ -627,131 +1086,122 @@ The server will start on `http://localhost:3000` (or your configured PORT).
 }
 ```
 
-## 🗺️ Roadmap
+## 🔍 Troubleshooting
 
-### Phase 1: Core Infrastructure ✅
-- [x] Web crawler for documentation sites
-- [x] Vector embedding generation with OpenAI
-- [x] Pinecone vector storage integration
-- [x] RESTful API with comprehensive validation
+### Common Issues
 
-### Phase 2: MCP Server Generation (Planned)
-- [ ] RAG query implementation for semantic search
-- [ ] MCP server template generation
-- [ ] Automated MCP server deployment
-- [ ] Custom knowledge base management
+#### Vector Database Connection Issues
+```bash
+# Check Pinecone connection
+curl -X GET http://localhost:3000/api/rag/health
 
-### Phase 3: Advanced Features (Future)
-- [ ] Multi-source documentation aggregation
-- [ ] Custom embedding model support
-- [ ] Real-time documentation updates
-- [ ] MCP server marketplace integration
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- 📧 Report issues on [GitHub Issues](https://github.com/yourusername/mcp-agent/issues)
-- 💬 Join our community discussions
-- 📖 Check the documentation for detailed guides
-
----
-
-**Made with ❤️ for the AI community**
-npm run test:coverage
+# Verify environment variables
+echo $PINECONE_API_KEY
+echo $PINECONE_INDEX_NAME
 ```
 
-## 🚀 Deployment
+**Solutions:**
+- Verify Pinecone API key and index name in `.env`
+- Ensure index dimensions match (512)
+- Check Pinecone service status
 
-### Build for Production
+#### OpenAI API Errors
+```bash
+# Test OpenAI connectivity
+curl -X POST http://localhost:3000/api/vector/test \
+  -H "Content-Type: application/json" \
+  -d '{"content": "test", "namespace": "test"}'
+```
+
+**Solutions:**
+- Verify OpenAI API key has sufficient credits
+- Check rate limits and quotas
+- Ensure API key has embedding permissions
+
+#### Memory Issues with Large Documents
+**Solutions:**
+- Reduce `maxPages` in crawl requests
+- Increase Node.js memory: `node --max-old-space-size=4096`
+- Process documents in smaller batches
+
+#### Slow Query Performance
+**Solutions:**
+- Reduce `topK` parameter for faster searches
+- Use more specific queries
+- Check Pinecone index performance metrics
+
+### Debug Mode
+
+Enable detailed logging for troubleshooting:
 
 ```bash
-npm run build
-npm start
+LOG_LEVEL=debug npm run dev
 ```
 
-### Environment Variables
+### Getting Help
 
-Copy `.env.example` to `.env` and configure:
-
-```env
-NODE_ENV=production
-PORT=3000
-LOG_LEVEL=info
-CORS_ORIGIN=https://yourdomain.com
-```
-
-### Docker (Optional)
-
-Create a `Dockerfile`:
-
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY dist ./dist
-
-EXPOSE 3000
-
-CMD [\"node\", \"dist/server.js\"]
-```
-
-### Deploy to Cloud Platforms
-
-This boilerplate is ready to deploy to:
-- **Heroku**: Add `Procfile` with `web: npm start`
-- **Railway**: Configure build command `npm run build`
-- **Render**: Set build command to `npm run build` and start command to `npm start`
-- **AWS/GCP/Azure**: Use Docker or serverless deployment
-
-## 🔒 Security Features
-
-- **Helmet**: Sets various HTTP headers
-- **CORS**: Configurable cross-origin resource sharing
-- **Input Validation**: Request validation with Joi
-- **Error Handling**: No sensitive information leakage
-- **Rate Limiting**: Ready to implement (example in env)
-
-## 📚 Code Quality
-
-- **TypeScript**: Strict mode enabled with comprehensive type checking
-- **ESLint**: Linting with TypeScript-specific rules
-- **Prettier**: Code formatting
-- **Path Mapping**: Clean imports with `@/` alias
-- **Error Classes**: Custom error handling with proper HTTP status codes
+- **Documentation Issues**: Check the API endpoints and examples above
+- **Performance Issues**: Monitor health endpoints and logs
+- **Integration Issues**: Review environment configuration
+- **Bug Reports**: Please include logs and reproduction steps
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+We welcome contributions! Here's how to get started:
+
+### Development Setup
+
+1. **Fork and clone the repository**
+   ```bash
+   git clone https://github.com/your-username/documentation-rag-system.git
+   cd documentation-rag-system
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment**
+   ```bash
+   cp .env.example .env.development
+   # Add your development API keys
+   ```
+
+4. **Run tests**
+   ```bash
+   npm test
+   ```
+
+### Contribution Guidelines
+
+- **Code Style**: Follow the existing TypeScript/ESLint configuration
+- **Testing**: Add tests for new features and bug fixes
+- **Documentation**: Update README and API documentation
+- **Commits**: Use conventional commit messages
+- **Pull Requests**: Include description, testing notes, and screenshots if applicable
+
+### Areas for Contribution
+
+- **New Data Sources**: Support for additional documentation formats
+- **Enhanced Crawling**: Better content extraction and link following
+- **Vector Databases**: Support for additional vector database providers
+- **LLM Providers**: Integration with additional language models
+- **Performance**: Optimization and caching improvements
+- **Monitoring**: Enhanced metrics and alerting
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- Express.js team for the amazing framework
-- TypeScript team for type safety
-- All the open-source contributors who made this possible
+- **OpenAI** for providing powerful embeddings and language models
+- **Pinecone** for the scalable vector database platform
+- **The open-source community** for the amazing tools and libraries that make this possible
 
 ---
 
-**Happy Coding! 🎉**
+**Made with ❤️ for documentation-driven development**
+
+> Transform any documentation into an intelligent, searchable knowledge base with our production-ready RAG system.

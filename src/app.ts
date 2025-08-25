@@ -12,6 +12,7 @@ import indexRoutes from './routes';
 import userRoutes from './routes/userRoutes';
 import webCrawlerRoutes from './routes/webCrawlerRoutes';
 import vectorRoutes from './routes/vectorRoutes';
+import ragRoutes from './routes/ragRoutes';
 
 class App {
   public app: Application;
@@ -62,6 +63,7 @@ class App {
     this.app.use('/api/users', userRoutes);
     this.app.use('/api/crawler', webCrawlerRoutes);
     this.app.use('/api/vector', vectorRoutes);
+    this.app.use('/api/rag', ragRoutes);
 
     // Welcome route
     this.app.get('/', (_req, res) => {
