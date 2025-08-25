@@ -10,6 +10,8 @@ import { errorHandler, notFoundHandler } from './middlewares/errorHandler';
 // Import routes
 import indexRoutes from './routes';
 import userRoutes from './routes/userRoutes';
+import webCrawlerRoutes from './routes/webCrawlerRoutes';
+import vectorRoutes from './routes/vectorRoutes';
 
 class App {
   public app: Application;
@@ -58,6 +60,8 @@ class App {
     // API routes
     this.app.use('/api', indexRoutes);
     this.app.use('/api/users', userRoutes);
+    this.app.use('/api/crawler', webCrawlerRoutes);
+    this.app.use('/api/vector', vectorRoutes);
 
     // Welcome route
     this.app.get('/', (_req, res) => {

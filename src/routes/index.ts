@@ -34,12 +34,23 @@ router.get('/', (_req: Request, res: Response) => {
   const apiInfo = {
     name: 'Express TypeScript Boilerplate API',
     version: '1.0.0',
-    description: 'Production-ready Express.js + TypeScript API boilerplate',
+    description: 'Production-ready Express.js + TypeScript API boilerplate with Web Crawler & Vector DB',
     endpoints: {
       health: '/api/health',
       users: '/api/users',
+      crawler: {
+        crawl: '/api/crawler/crawl',
+        preview: '/api/crawler/preview',
+        analyze: '/api/crawler/analyze'
+      },
+      vector: {
+        crawlAndStore: '/api/vector/crawl-and-store',
+        preview: '/api/vector/preview',
+        test: '/api/vector/test',
+        indexStats: '/api/vector/index/:indexName/stats'
+      }
     },
-    documentation: 'Add your API documentation URL here',
+    documentation: 'Professional web crawler with vector database storage for RAG applications',
   };
 
   return successResponse(res, 'API information', apiInfo);

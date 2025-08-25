@@ -12,6 +12,26 @@ const envSchema = Joi.object({
   CORS_ORIGIN: Joi.string().default('*'),
   RATE_LIMIT_WINDOW_MS: Joi.number().default(15 * 60 * 1000), // 15 minutes
   RATE_LIMIT_MAX_REQUESTS: Joi.number().default(100),
+  
+  // Vector Database Configuration
+  PINECONE_API_KEY: Joi.string().when('NODE_ENV', {
+    is: 'production',
+    then: Joi.required(),
+    otherwise: Joi.optional()
+  }),
+  PINECONE_ENVIRONMENT: Joi.string().when('NODE_ENV', {
+    is: 'production', 
+    then: Joi.required(),
+    otherwise: Joi.optional()
+  }),
+  PINECONE_INDEX_NAME: Joi.string().default('documentation-embeddings'),
+  
+  // OpenAI Configuration
+  OPENAI_API_KEY: Joi.string().when('NODE_ENV', {
+    is: 'production',
+    then: Joi.required(),
+    otherwise: Joi.optional()
+  }),
 }).unknown(true);
 
 const { error, value: envVars } = envSchema.validate(process.env);
@@ -37,6 +57,18 @@ export const config = {
   rateLimit: {
     windowMs: envVars.RATE_LIMIT_WINDOW_MS as number,
     maxRequests: envVars.RATE_LIMIT_MAX_REQUESTS as number,
+  },
+  
+  // Vector Database Configuration
+  pinecone: {
+    apiKey: envVars.PINECONE_API_KEY as string,
+    environment: envVars.PINECONE_ENVIRONMENT as string,
+    indexName: envVars.PINECONE_INDEX_NAME as string,
+  },
+  
+  // OpenAI Configuration
+  openai: {
+    apiKey: envVars.OPENAI_API_KEY as string,
   },
   
   // Database (example - uncomment and modify as needed)
