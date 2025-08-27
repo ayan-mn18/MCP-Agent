@@ -16,7 +16,11 @@
     "test:coverage": "jest --coverage",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "prestart": "npm run build"
+    "prestart": "npm run build",
+    "mcp:cartesia": "node cartesia-mcp-server.js",
+    "mcp:setup": "node setup-cartesia-mcp.js",
+    "mcp:test": "npx ts-node -r tsconfig-paths/register src/mcp/CartesiaMCPServer.ts",
+    "mcp:guide": "code VSCODE_MCP_CONNECTION_GUIDE.md"
   },
   "keywords": [
     "nodejs",
@@ -29,6 +33,7 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
     "@pinecone-database/pinecone": "^3.0.3",
     "axios": "^1.7.7",
     "cheerio": "^1.0.0",
